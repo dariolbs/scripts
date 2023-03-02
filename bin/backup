@@ -1,0 +1,21 @@
+#!/usr/bin/bash
+# Backup script. Uses values defined in ~/.dalis/config for backups on the fly 
+source $HOME/.scripts/functions/colors
+source $HOME/.dalis/config
+PS3="Selected option: "
+options=( "Documents" "Media" "Both" )
+case "$1" in
+    "")
+        select option in ${options[@]}; do
+            case $option in
+                "Both")
+                    tar -cfvz backup.tar.gz "$HOME/Documents" "$HOME/Media"
+                    ;;
+                *)
+                    tar -cfvz backup.tar.gz "$HOME/$option"
+                    ;;
+
+            esac
+            break
+        done
+esac
